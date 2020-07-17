@@ -1,61 +1,60 @@
 
 /*
  * CountingSort
- * "counting"Àº "¼ÀÀ» ÇÏ´Ù"¶ó´Â ¸»ÀÔ´Ï´Ù.
+ * "counting"ì€ "ì…ˆì„ í•˜ë‹¤"ë¼ëŠ” ë§ìž…ë‹ˆë‹¤.
  * 
- * ÀÏ¹ÝÀûÀ¸·Î ¼ÀÀ» ÇÒ¶§´Â Ã¹Â°, µÑÂ°..·Î ¼¼¸ç
- * ÀÌ´Â ÀÏ, ÀÌ, »ï..°ú °°ÀÌ °ª ÀÚÃ¼¸¦ ¸»ÇÏ´Â °ÍÀÌ ¾Æ´Ñ
- * °ªÀÇ À§Ä¡¸¦ ±Ù°ÅÇÕ´Ï´Ù.
+ * ì¼ë°˜ì ìœ¼ë¡œ ì…ˆì„ í• ë•ŒëŠ” ì²«ì§¸, ë‘˜ì§¸..ë¡œ ì„¸ë©°
+ * ì´ëŠ” ì¼, ì´, ì‚¼..ê³¼ ê°™ì´ ê°’ ìžì²´ë¥¼ ë§í•˜ëŠ” ê²ƒì´ ì•„ë‹Œ
+ * ê°’ì˜ ìœ„ì¹˜ë¥¼ ê·¼ê±°í•©ë‹ˆë‹¤.
  * 
- * Q.¹«¾ùÀ» counting ÇÏ³ª?
- * 1. 1, 10, 100ÀÇ ÀÚ¸®¼ö
- * 2. °¢ ÀÚ¸® ¼öÀÇ ÃâÇö ¼ýÀÚ °³¼ö
- * 3. ÃâÇö ¼ýÀÚ °³¼öÀÇ ÃÑ ÇÕÀ» ÀÌ¿ë
- *    (¿ªÀ¸·Î Á¤·ÄµÉ ÀÚ¸® ÃßÀû )
+ * Q.ë¬´ì—‡ì„ counting í•˜ë‚˜?
+ * 1. 1, 10, 100ì˜ ìžë¦¬ìˆ˜
+ * 2. ê° ìžë¦¬ ìˆ˜ì˜ ì¶œí˜„ ìˆ«ìž ê°œìˆ˜
+ * 3. ì¶œí˜„ ìˆ«ìž ê°œìˆ˜ì˜ ì´ í•©ì„ ì´ìš©
+ *    (ì—­ìœ¼ë¡œ ì •ë ¬ë  ìžë¦¬ ì¶”ì  )
  *    
- * Q.max °ªÀ» ¾Ë¾Æ¾ß ÇÏ´Â ÀÌÀ¯´Â?
- * max+1 °ªÀ» ÀÌ¿ëÇÏ¿© ¹è¿­À» ¸¸µç´Ù.
- * countingÀº À§Ä¡¸¦ ±Ù°ÅÇÑ´Ù°í ÇÏ¿´´Ù.
- * counts ¹è¿­ÀÇ index = ÃâÇö ¼ýÀÚ ÀÌ´Ù.
- * Áï, ¹è¿­³» ÁÖ¼Ò¿Í ¼ýÀÚ¸¦ µ¿ÀÏÇÏ°Ô ¸¸µé±â À§ÇÔÀÌ´Ù.
+ * Q.max ê°’ì„ ì•Œì•„ì•¼ í•˜ëŠ” ì´ìœ ëŠ”?
+ * max+1 ê°’ì„ ì´ìš©í•˜ì—¬ ë°°ì—´ì„ ë§Œë“ ë‹¤.
+ * countingì€ ìœ„ì¹˜ë¥¼ ê·¼ê±°í•œë‹¤ê³  í•˜ì˜€ë‹¤.
+ * counts ë°°ì—´ì˜ index = ì¶œí˜„ ìˆ«ìž ì´ë‹¤.
+ * ì¦‰, ë°°ì—´ë‚´ ì£¼ì†Œì™€ ìˆ«ìžë¥¼ ë™ì¼í•˜ê²Œ ë§Œë“¤ê¸° ìœ„í•¨ì´ë‹¤.
  * 
- * Q.±×·³ ¿Ö min °ªÀº ¿Ö ¾È±¸ÇÒ±î?
- * ¸¸¾à min°ªÀ» ±¸ÇÑ´Ù°íÇØµµ,
- * ¹è¿­ÀÇ ÁÖ¼Ò´Â 0ºÎÅÍ ½ÃÀÛÇÑ´Ù´Â Æ¯¼º°ú ¿¬¼Ó¼ºÀ» °¡Áø´Ù ¶ó´Â Æ¯Â¡À¸·Î
- * ¹è¿­ ÀÚÃ¼¸¦ Áß°£¿¡ Â¥¸£Áø ¸øÇÒ °ÍÀÌ´Ù.
- * ±×·³ ÀÏ´Ü ¹è¿­Àº 0ºÎÅÍ ½ÃÀÛÇÏ°Ô ¸¸µé°í °Ë»ç ¹üÀ§¸¦ ÁÙÀÏ±î?
- * ´ç¿¬È÷ ÀÌ·¸°Ô ÇÒ ¼ö´Â ÀÖÀ» °ÍÀÌ´Ù.
- * ±×·±µ¥ ±¸Áö????
- * ¤¤¤¤ ÀÚ¸®¼ö º°·Î °Ë»çÇÑ´Ù¸é °á±¹ 0~9±îÁö ¸ðµç ¼ýÀÚ¸¦ countingÇÏ´Âµ¥
- * ¿Ö ±×·¸°Ô Å©°Ô ¸¸µé¾û...±×¸£Áö¸¶·¯...ÇÇ°ïÇÏÀÚ³ª ÀÚ°í½Í¾î..Á» ÀÚÀÚ ÀÎ°£¾Æ
+ * Q.ê·¸ëŸ¼ ì™œ min ê°’ì€ ì™œ ì•ˆêµ¬í• ê¹Œ?
+ * ë§Œì•½ minê°’ì„ êµ¬í•œë‹¤ê³ í•´ë„,
+ * ë°°ì—´ì˜ ì£¼ì†ŒëŠ” 0ë¶€í„° ì‹œìž‘í•œë‹¤ëŠ” íŠ¹ì„±ê³¼ ì—°ì†ì„±ì„ ê°€ì§„ë‹¤ ë¼ëŠ” íŠ¹ì§•ìœ¼ë¡œ
+ * ë°°ì—´ ìžì²´ë¥¼ ì¤‘ê°„ì— ì§œë¥´ì§„ ëª»í•  ê²ƒì´ë‹¤.
+ * ê·¸ëŸ¼ ì¼ë‹¨ ë°°ì—´ì€ 0ë¶€í„° ì‹œìž‘í•˜ê²Œ ë§Œë“¤ê³  ê²€ì‚¬ ë²”ìœ„ë¥¼ ì¤„ì¼ê¹Œ?
+ * ë‹¹ì—°ížˆ ì´ë ‡ê²Œ í•  ìˆ˜ëŠ” ìžˆì„ ê²ƒì´ë‹¤.
+ * ê·¸ëŸ°ë° êµ¬ì§€????
+ * ã„´ã„´ ìžë¦¬ìˆ˜ ë³„ë¡œ ê²€ì‚¬í•œë‹¤ë©´ ê²°êµ­ 0~9ê¹Œì§€ ëª¨ë“  ìˆ«ìžë¥¼ countingí•˜ëŠ”ë°
  * 
- * ÇÏÁö¸¸ ÇØ´ç ¾Ë°í¸®Áò¿¡¼­´Â
- * ±â¼ö Á¤·ÄÀÇ ÀÏºÎ¸¦ ÀÌ¿ëÇÏ¿© ÀÚ¸®¼ö¸¦ ³ª´©¾î
- * 0~9±îÁö °Ë»çÇÏ´Â ¹æ¹ýÀ» Â÷¿ëÇÏ¿´´Ù.
- * ´Ü ±Ùº»ÀûÀ¸·Î À§Ä¡±â¹ÝÀ¸·Î ÁøÇàµÊÀ¸·Î ÀÌ´Â countingsort¸¦ ÁÖ·Î »ç¿ëÇÏ¿´´Ù°í ÇÒ ¼ö ÀÖÀ» °ÍÀÌ´Ù.
+ * í•˜ì§€ë§Œ í•´ë‹¹ ì•Œê³ ë¦¬ì¦˜ì—ì„œëŠ”
+ * ê¸°ìˆ˜ ì •ë ¬ì˜ ì¼ë¶€ë¥¼ ì´ìš©í•˜ì—¬ ìžë¦¬ìˆ˜ë¥¼ ë‚˜ëˆ„ì–´
+ * 0~9ê¹Œì§€ ê²€ì‚¬í•˜ëŠ” ë°©ë²•ì„ ì°¨ìš©í•˜ì˜€ë‹¤.
+ * ë‹¨ ê·¼ë³¸ì ìœ¼ë¡œ ìœ„ì¹˜ê¸°ë°˜ìœ¼ë¡œ ì§„í–‰ë¨ìœ¼ë¡œ ì´ëŠ” countingsortë¥¼ ì£¼ë¡œ ì‚¬ìš©í•˜ì˜€ë‹¤ê³  í•  ìˆ˜ ìžˆì„ ê²ƒì´ë‹¤.
  * 
  * 
- * Q.count ´©ÀûÀ» ÇÏ´Â ÀÌÀ¯´Â?
- * °¢ ¿ä¼Òº°·Î 1 ¶Ç´Â 10 ¶Ç´Â 100ÀÇ ÀÚ¸®¼ö º°·Î 1°³ÀÇ ¼ýÀÚ¸¦ Àß¶ó¿Â´Ù.
- * ¿©±â¼­ ÃâÇöµÇ´Â ¼ýÀÚµéÀÇ °³¼ö¸¦ ¸ðµÎ ÇÕÇÏ¸é, ¿©±â¼­´Â 7À» ÃÊ°ú ÇÒ ¼ö ¾ø´Ù.
- * Áï, ÃÖÃÊ Á¤·ÄÇÏ°íÀÚ ÇÏ´Â ¹è¿­ÀÇ ¿ä¼Ò°ª °³¼ö¸¦ ÃÊ°úÇÒ ¼ö ¾ø´Ù.
+ * Q.count ëˆ„ì ì„ í•˜ëŠ” ì´ìœ ëŠ”?
+ * ê° ìš”ì†Œë³„ë¡œ 1 ë˜ëŠ” 10 ë˜ëŠ” 100ì˜ ìžë¦¬ìˆ˜ ë³„ë¡œ 1ê°œì˜ ìˆ«ìžë¥¼ ìž˜ë¼ì˜¨ë‹¤.
+ * ì—¬ê¸°ì„œ ì¶œí˜„ë˜ëŠ” ìˆ«ìžë“¤ì˜ ê°œìˆ˜ë¥¼ ëª¨ë‘ í•©í•˜ë©´, ì—¬ê¸°ì„œëŠ” 7ì„ ì´ˆê³¼ í•  ìˆ˜ ì—†ë‹¤.
+ * ì¦‰, ìµœì´ˆ ì •ë ¬í•˜ê³ ìž í•˜ëŠ” ë°°ì—´ì˜ ìš”ì†Œê°’ ê°œìˆ˜ë¥¼ ì´ˆê³¼í•  ìˆ˜ ì—†ë‹¤.
  * 
- * ÀÌ·¸°Ô ´©ÀûÇÑ °ªÀº
- * °¢ ¼ýÀÚµéÀÌ Á¤·ÄµÇ±â À§ÇØ ¹èÄ¡µÇ¾î¾ß ÇÏ´Â »õ·Î¿î À§Ä¡ ÁÖ¼Ò¿Í µ¿ÀÏÇÏ´Ù.
- * ¼ÖÁ÷È÷..ÀÎÁ¤¸Ó¸®°¡ ÀÖÀ¸¸é ÀÌ°Í±îÁö ¿Ö³Ä°í ¹¯Áø ¸»ÀÚ....1+1=2¶óÀÝ¾Æ ³ªµµ ±×·¸´Ù´Ï±î ±×³É ¾Æ´Â°Å¾ß..
- * ´©Àû °³¼ö¸¦ ±Ù°ÅÇÏ¿© ¹èÄ¡ÇÒ ¶§¸¶´Ù -1ÇÏ¿© ÁÖ¼Ò¸¦ ÇÏ³ª¾¿ Â÷°¨ÇØÁÖ¸é,
- * ¸ðµç ¼ö¸¦ Å©±âº°·Î ¹èÄ¡ÇÒ ¼ö ÀÖ´Ù.
+ * ì´ë ‡ê²Œ ëˆ„ì í•œ ê°’ì€
+ * ê° ìˆ«ìžë“¤ì´ ì •ë ¬ë˜ê¸° ìœ„í•´ ë°°ì¹˜ë˜ì–´ì•¼ í•˜ëŠ” ìƒˆë¡œìš´ ìœ„ì¹˜ ì£¼ì†Œì™€ ë™ì¼í•˜ë‹¤.
+ * ì†”ì§ížˆ..ì¸ì •ë¨¸ë¦¬ê°€ ìžˆìœ¼ë©´ ì´ê²ƒê¹Œì§€ ì™œëƒê³  ë¬»ì§„ ë§ìž....1+1=2ë¼ìž–ì•„ ë‚˜ë„ ê·¸ë ‡ë‹¤ë‹ˆê¹Œ ê·¸ëƒ¥ ì•„ëŠ”ê±°ì•¼..
+ * ëˆ„ì  ê°œìˆ˜ë¥¼ ê·¼ê±°í•˜ì—¬ ë°°ì¹˜í•  ë•Œë§ˆë‹¤ -1í•˜ì—¬ ì£¼ì†Œë¥¼ í•˜ë‚˜ì”© ì°¨ê°í•´ì£¼ë©´,
+ * ëª¨ë“  ìˆ˜ë¥¼ í¬ê¸°ë³„ë¡œ ë°°ì¹˜í•  ìˆ˜ ìžˆë‹¤.
  * 
- * Áï, ´©Àû °ªÀº index¿Í °°´Ù!
+ * ì¦‰, ëˆ„ì  ê°’ì€ indexì™€ ê°™ë‹¤!
  * 
- * Q.¿Ö °Å²Ù·Î ÀÐ±â ½ÃÀÛÇØ¼­ ³Ö¾î¾ßÇØ?
- * ¾ÕÀÌ³ª µÚ³ª °°Àº °á°ú °ªÀÌ ³ª¿Ã °ÍÀÌ´Ù.¾Æ¸¶? ±Ã±ÝÇÏ¸é..ÇØº¸¼¼¿ä ³­ ´õ ¸øÇÏ°ÚÀ½..
- * ÃßÃøÄÁµ¥! ÃßÃøÀÌ´Ù ÃßÃø~~
- * ¸¸¾à index=0ºÎÅÍ ½ÃÀÛÇÑ´Ù°í Ä¡ÀÚ.
- * indexÀº ++ÀÌ µÇ¾î¾ß ÇÏ°í, countingÀº --°¡ µÇ¾î¾ß ÇÏ´Â »óÈ²¿¡¼­
- * ºÐ¸í Ãß°¡ Á¶°ÇÀÌ ºÙÁö ¾ÊÀ»±î? ¶ó°í »ý°²³ª´Ù.
- * Áï, index¿Í countingÀ» ÇÑ ¹æÇâÀ¸·Î ÁøÇàÇÏ¸é ÇÏ³ªÀÇ Á¶°Ç¿¡¼­ ÁøÇà ÇÒ ¼ö ÀÖÀ¸´Ï±î!
- * È¤ ´Ù¸¥ ÀÌÀ¯¶ó¸é ¾ß¹ã¿¡ °µÅåÇØµµ ÁÁ´Ù! ³ªµµ ¾Ë°í½ÃÆþ
+ * Q.ì™œ ê±°ê¾¸ë¡œ ì½ê¸° ì‹œìž‘í•´ì„œ ë„£ì–´ì•¼í•´?
+ * ì•žì´ë‚˜ ë’¤ë‚˜ ê°™ì€ ê²°ê³¼ ê°’ì´ ë‚˜ì˜¬ ê²ƒì´ë‹¤.ì•„ë§ˆ? ê¶ê¸ˆí•˜ë©´..í•´ë³´ì„¸ìš” ë‚œ ë” ëª»í•˜ê² ìŒ..
+ * ì¶”ì¸¡ì»¨ë°! ì¶”ì¸¡ì´ë‹¤ ì¶”ì¸¡~~
+ * ë§Œì•½ index=0ë¶€í„° ì‹œìž‘í•œë‹¤ê³  ì¹˜ìž.
+ * indexì€ ++ì´ ë˜ì–´ì•¼ í•˜ê³ , countingì€ --ê°€ ë˜ì–´ì•¼ í•˜ëŠ” ìƒí™©ì—ì„œ
+ * ë¶„ëª… ì¶”ê°€ ì¡°ê±´ì´ ë¶™ì§€ ì•Šì„ê¹Œ? ë¼ê³  ìƒê°›ë‚˜ë‹¤.
+ * ì¦‰, indexì™€ countingì„ í•œ ë°©í–¥ìœ¼ë¡œ ì§„í–‰í•˜ë©´ í•˜ë‚˜ì˜ ì¡°ê±´ì—ì„œ ì§„í–‰ í•  ìˆ˜ ìžˆìœ¼ë‹ˆê¹Œ!
+ * í˜¹ ë‹¤ë¥¸ ì´ìœ ë¼ë©´ ì•¼ë°¤ì— ê° í†¡í•´ë„ ì¢‹ë‹¤! ë‚˜ë„ ì•Œê³ ì‹œí
  */
 import java.util.Arrays;
 
@@ -63,56 +62,56 @@ public class CountingSort {
 
 	public static void main(String[] args) {
 		int[] array = { 142, 243, 21, 13, 11, 7, 86 };
-		System.out.println("\nÁ¤·Ä Àü\n" + Arrays.toString(array));
+		System.out.println("\nì •ë ¬ ì „\n" + Arrays.toString(array));
 		countingSort(array);
 	}
 
 	public static void countingSort(int[] array) {
-		final int MAX_LENGTH = CountingSort.getMaxLength(array)/*¸Å°Ôº¯¼ö·Î ¹è¿­ ¹Þ¾Æ¿À±â*/,
+		final int MAX_LENGTH = CountingSort.getMaxLength(array)/*ë§¤ê²Œë³€ìˆ˜ë¡œ ë°°ì—´ ë°›ì•„ì˜¤ê¸°*/,
 				  myArrLen = array.length;
 		System.out.println("myArrLen : " + myArrLen+"\n\n");
 
 		int myRadix = 1;
 
-		int[] sortedArray = new int[myArrLen], counts; // myArrLen = 7,Á¤·ÄµÈ ¼ýÀÚ¸¦ ³ÖÀ» ¹è¿­ »ý¼º
+		int[] sortedArray = new int[myArrLen], counts; // myArrLen = 7,ì •ë ¬ëœ ìˆ«ìžë¥¼ ë„£ì„ ë°°ì—´ ìƒì„±
 
 		for (int p = 0; p < MAX_LENGTH; p++) { // MAX_LENGTH = 3;
 			
 			
 			System.out.println("-------------turn-------------");
 			
-			counts = new int[10]; //Á¤·ÄÇÒ ¹è¿­ÀÇ °ª ±¸¼ºÀÌ 0~9±îÁöÀÇ ¼ýÀÚ·Î µÇ¾îÀÖ±â ¶§¹®ÀÌ´Ù.
+			counts = new int[10]; //ì •ë ¬í•  ë°°ì—´ì˜ ê°’ êµ¬ì„±ì´ 0~9ê¹Œì§€ì˜ ìˆ«ìžë¡œ ë˜ì–´ìžˆê¸° ë•Œë¬¸ì´ë‹¤.
 			
-			System.out.println("¼ýÀÚ Àß¶ó¿À±â");
+			System.out.println("ìˆ«ìž ìž˜ë¼ì˜¤ê¸°");
 			for (int numOfTemp : array) { 
 				counts[(numOfTemp / myRadix) % 10]++;
 				System.out.print(((numOfTemp / myRadix) % 10)+" ");
-			}//-> ¼ýÀÚ Àß¶ó¿À±â : Ã¹ turn¿¡¼­ 1ÀÇ ÀÚ¸®; µÎ¹øÂ° turn¿¡¼­ 10ÀÇ ÀÚ¸®; ¼¼¹øÂ° turn¿¡¼­ 100ÀÇ ÀÚ¸®
+			}//-> ìˆ«ìž ìž˜ë¼ì˜¤ê¸° : ì²« turnì—ì„œ 1ì˜ ìžë¦¬; ë‘ë²ˆì§¸ turnì—ì„œ 10ì˜ ìžë¦¬; ì„¸ë²ˆì§¸ turnì—ì„œ 100ì˜ ìžë¦¬
 			
 			System.out.println();
-			System.out.println("ÀÚ¸´¼ö º° ÃâÇö ¼ýÀÚ °³¼öÀÇ ÇÕ");
-			for (int i = 1; i < 10; i++) {	//À§ for¹®¿¡¼­ Àß¶ó¿Â ¼ýÀÚ¸¦ µ¿ÀÏÇÑ counts index¿¡ ¸î¹ø ³ª¿Ô´ÂÁö ÀÔ·Â
+			System.out.println("ìžë¦¿ìˆ˜ ë³„ ì¶œí˜„ ìˆ«ìž ê°œìˆ˜ì˜ í•©");
+			for (int i = 1; i < 10; i++) {	//ìœ„ forë¬¸ì—ì„œ ìž˜ë¼ì˜¨ ìˆ«ìžë¥¼ ë™ì¼í•œ counts indexì— ëª‡ë²ˆ ë‚˜ì™”ëŠ”ì§€ ìž…ë ¥
 				counts[i] += counts[i - 1];
 //			System.out.print("["+counts[i]+"]");
-			}//-> ¸î ¹ø ³ª¿Ô´ÂÁö °³¼ö¸¦ ¼¾ ÈÄ, index 0~9±îÁö ¿ä¼Ò°ªÀ» ´õÇÏ¿© ´©Àû °³¼ö¸¦ ÀúÀåÇÑ´Ù.
+			}//-> ëª‡ ë²ˆ ë‚˜ì™”ëŠ”ì§€ ê°œìˆ˜ë¥¼ ì„¼ í›„, index 0~9ê¹Œì§€ ìš”ì†Œê°’ì„ ë”í•˜ì—¬ ëˆ„ì  ê°œìˆ˜ë¥¼ ì €ìž¥í•œë‹¤.
 			
-				/* "ÀÚ¸´¼ö º° ÃâÇö ¼ýÀÚ °³¼öÀÇ ÇÕ" for¹®¿¡ ´ëÇÏ¿©
-				 * counts[i]¹è¿­ÀÇ index´Â 0~9±îÁö ÀÌ´Ù.
-				 * ÇÏÁö¸¸ »ó´Ü°ú °°ÀÌ i=1·Î ½ÃÀÛÇÒ °æ¿ì, counts[0]ÀÌ Ãâ·ÂµÇÁö ¾Ê´Â´Ù.
-				 * ÇØ´ç counts¹è¿­Àº Ä«¿îÆÃ ¸ñÀûÀÌ¸ç index=0ÀÇ ¿ä¼Ò°ªÀÌ Ãâ·Â µÇÁö ¾Ê´Â´Ù°í ÇÏ¿© ¹®Á¦ µÉ °ÍÀº ¾ø´Ù.
-				 * Ãâ·ÂÀÌ ¾ÈµÇ´Â °ÍÀÌÁö counts[0]ÀÇ ¿ä¼Ò°ªÀº Á¸ÀçÇÏ±â ¶§¹®ÀÌ´Ù.
-				 * ÀÌÇØ¸¦ À§ÇØ ÀÓÀÇ Ãâ·Â ÇÒ °æ¿ì, ¹è¿­ÀÇ Ãâ·ÂÀÌ È¥¶õÀ» °¡Á®¿Ã ¼ö ÀÖÀ½À¸·Î ÁÖÀÇÇÏÀÚ!
+				/* "ìžë¦¿ìˆ˜ ë³„ ì¶œí˜„ ìˆ«ìž ê°œìˆ˜ì˜ í•©" forë¬¸ì— ëŒ€í•˜ì—¬
+				 * counts[i]ë°°ì—´ì˜ indexëŠ” 0~9ê¹Œì§€ ì´ë‹¤.
+				 * í•˜ì§€ë§Œ ìƒë‹¨ê³¼ ê°™ì´ i=1ë¡œ ì‹œìž‘í•  ê²½ìš°, counts[0]ì´ ì¶œë ¥ë˜ì§€ ì•ŠëŠ”ë‹¤.
+				 * í•´ë‹¹ countsë°°ì—´ì€ ì¹´ìš´íŒ… ëª©ì ì´ë©° index=0ì˜ ìš”ì†Œê°’ì´ ì¶œë ¥ ë˜ì§€ ì•ŠëŠ”ë‹¤ê³  í•˜ì—¬ ë¬¸ì œ ë  ê²ƒì€ ì—†ë‹¤.
+				 * ì¶œë ¥ì´ ì•ˆë˜ëŠ” ê²ƒì´ì§€ counts[0]ì˜ ìš”ì†Œê°’ì€ ì¡´ìž¬í•˜ê¸° ë•Œë¬¸ì´ë‹¤.
+				 * ì´í•´ë¥¼ ìœ„í•´ ìž„ì˜ ì¶œë ¥ í•  ê²½ìš°, ë°°ì—´ì˜ ì¶œë ¥ì´ í˜¼ëž€ì„ ê°€ì ¸ì˜¬ ìˆ˜ ìžˆìŒìœ¼ë¡œ ì£¼ì˜í•˜ìž!
 				 * 
-				 * #1. for Á¶°ÇÀ¸·Î i=0, counts[i-1]ÀÏ °æ¿ì,
-				 * Ã³À½¿¡ index¹øÈ£°¡ -1 ·Î µé¾î°¡¼­,ArrayIndexOutOfBoundsException ¹ß»ý
+				 * #1. for ì¡°ê±´ìœ¼ë¡œ i=0, counts[i-1]ì¼ ê²½ìš°,
+				 * ì²˜ìŒì— indexë²ˆí˜¸ê°€ -1 ë¡œ ë“¤ì–´ê°€ì„œ,ArrayIndexOutOfBoundsException ë°œìƒ
 				 * 
-				 * #2. for Á¶°ÇÀ¸·Î i=0, counts[i+1]ÀÏ °æ¿ì,
-				 * Ã³À½¿¡ index¹øÈ£°¡ À½¼ö°¡ ¾Æ´ÏÁö¸¸, ¸¶Áö¸· index°¡ ÁöÁ¤ÇÑ 10º¸´Ù Ä¿Áö±â ¶§¹®¿¡
-				 * ArrayIndexOutOfBoundsException ¹ß»ý
+				 * #2. for ì¡°ê±´ìœ¼ë¡œ i=0, counts[i+1]ì¼ ê²½ìš°,
+				 * ì²˜ìŒì— indexë²ˆí˜¸ê°€ ìŒìˆ˜ê°€ ì•„ë‹ˆì§€ë§Œ, ë§ˆì§€ë§‰ indexê°€ ì§€ì •í•œ 10ë³´ë‹¤ ì»¤ì§€ê¸° ë•Œë¬¸ì—
+				 * ArrayIndexOutOfBoundsException ë°œìƒ
 				 */
 			
 			for (int i = myArrLen - 1; i >= 0; i--) {
-				System.out.println("i°ª : " + i);
+				System.out.println("iê°’ : " + i);
 				sortedArray[counts[(array[i] / myRadix) % 10]-- - 1] = array[i];
 				System.out.println("\ncounts[" + ((array[i] / myRadix) % 10)+"]");
 			}
@@ -126,11 +125,11 @@ public class CountingSort {
 			myRadix *= 10;
 
 		}
-		System.out.print("\nÁ¤·Ä ÈÄ\n" + Arrays.toString(array));
+		System.out.print("\nì •ë ¬ í›„\n" + Arrays.toString(array));
 	}
 
-	public static int getMaxLength(int[] array) { // °¡Àå Å« ¼ýÀÚ Ã£¾Æ³»±â
-		System.out.println("\n-----ÃÖ´ë °ª »Ì¾Æ³»±â-----");
+	public static int getMaxLength(int[] array) { // ê°€ìž¥ í° ìˆ«ìž ì°¾ì•„ë‚´ê¸°
+		System.out.println("\n-----ìµœëŒ€ ê°’ ë½‘ì•„ë‚´ê¸°-----");
 		int max = 0;
 		for (int numOfTemp : array) {
 			if (max < numOfTemp)
@@ -138,7 +137,7 @@ public class CountingSort {
 			System.out.println("max : " + max);
 			System.out.println("numOfTemp : " + numOfTemp);
 		}
-		System.out.println ("\n" + max + " °ªÀÇ ÀÚ¸´¼ö °è»êÇÏ±â : "+((int) Math.log10((double) max) + 1)+"\n\n");
-		return (int) Math.log10((double) max) + 1; // °á°ú°ª : 21 / 1ÀÚ¸®¼ö ÀÌ»óÀÏ °æ¿ì, ÀÚ¸®¼ö °è»ê. (ÀÚ¸´¼ö ±¸ÇÏ±â)
+		System.out.println ("\n" + max + " ê°’ì˜ ìžë¦¿ìˆ˜ ê³„ì‚°í•˜ê¸° : "+((int) Math.log10((double) max) + 1)+"\n\n");
+		return (int) Math.log10((double) max) + 1; // ê²°ê³¼ê°’ : 21 / 1ìžë¦¬ìˆ˜ ì´ìƒì¼ ê²½ìš°, ìžë¦¬ìˆ˜ ê³„ì‚°. (ìžë¦¿ìˆ˜ êµ¬í•˜ê¸°)
 	}
 }
