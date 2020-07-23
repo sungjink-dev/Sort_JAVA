@@ -1,4 +1,4 @@
-package com.test;
+package Sort_hw;
 
 import java.util.Arrays;
 
@@ -11,22 +11,22 @@ public class MergeSort {
 	}
 	
 	
-	//¹è¿­À» Áß°£°ª ±¸ÇÏ¿© °è¼Ó ³ª´©±â
-	public static void mergeSort(int[] a, int low, int high) { //a¹è¿­, low=0, high=¹è¿­±æÀÌ-1=6
-		if (low < high) {	//ÀÛÀº °ªÀÌ ÀÛ°í, Å« °ªÀÌ Å¬ ¶§
-			int middle = low + (high - low) / 2;	//Áß°£ °ª ±¸ÇØ¼­ ¹è¿­ ³ª´©±â. ¼Ò¼öÁ¡ÀÌ ³ª¿À¸é ¹ö¸².
-			mergeSort(a, low, middle);	//ÃÖ´ë°ªÀ» Áß°£°ªÀ¸·Î ±âÁØ º¯°æ -> ÀÛÀº ¿ä¼Ò¹øÈ£ ¹è¿­
-			mergeSort(a, middle + 1, high);	//ÃÖ¼Ò°ªÀ» Áß°£°ª+1·Î ±âÁØ º´°æ -> Å« ¿ä¼Ò¹øÈ£ ¹è¿­
-			merge(a, low, middle, high);	//³ª´« ±âÁØ °ª°ú ¹è¿­ ³Ñ°ÜÁÖ±â
+	//ë°°ì—´ì„ ì¤‘ê°„ê°’ êµ¬í•˜ì—¬ ê³„ì† ë‚˜ëˆ„ê¸°
+	public static void mergeSort(int[] a, int low, int high) { //aë°°ì—´, low=0, high=ë°°ì—´ê¸¸ì´-1=6
+		if (low < high) {	//ì‘ì€ ê°’ì´ ì‘ê³ , í° ê°’ì´ í´ ë•Œ
+			int middle = low + (high - low) / 2;	//ì¤‘ê°„ ê°’ êµ¬í•´ì„œ ë°°ì—´ ë‚˜ëˆ„ê¸°. ì†Œìˆ˜ì ì´ ë‚˜ì˜¤ë©´ ë²„ë¦¼.
+			mergeSort(a, low, middle);	//ìµœëŒ€ê°’ì„ ì¤‘ê°„ê°’ìœ¼ë¡œ ê¸°ì¤€ ë³€ê²½ -> ì‘ì€ ìš”ì†Œë²ˆí˜¸ ë°°ì—´
+			mergeSort(a, middle + 1, high);	//ìµœì†Œê°’ì„ ì¤‘ê°„ê°’+1ë¡œ ê¸°ì¤€ ë³‘ê²½ -> í° ìš”ì†Œë²ˆí˜¸ ë°°ì—´
+			merge(a, low, middle, high);	//ë‚˜ëˆˆ ê¸°ì¤€ ê°’ê³¼ ë°°ì—´ ë„˜ê²¨ì£¼ê¸°
 		}
 	}
 
 	
-	//½ÇÁ¦ º´ÇÕ ¸Ş¼­µå
+	//ì‹¤ì œ ë³‘í•© ë©”ì„œë“œ
 	public static void merge(int[] a, int low, int middle, int high) {
-		int[] sorted = new int[a.length];	//°°Àº Å©±âÀÇ Á¤·ÄµÈ ¹è¿­ »ı¼º
+		int[] sorted = new int[a.length];	//ê°™ì€ í¬ê¸°ì˜ ì •ë ¬ëœ ë°°ì—´ ìƒì„±
 		
-		for (int i = low; i <= high; i++) {	//ÀÏ´Ü ¸ğµç °ªÀ» Á¤·Ä °á°ú¸¦ ³Ö´Â ¹è¿­¿¡ ¿Å°Ü ´ã±â
+		for (int i = low; i <= high; i++) {	//ì¼ë‹¨ ëª¨ë“  ê°’ì„ ì •ë ¬ ê²°ê³¼ë¥¼ ë„£ëŠ” ë°°ì—´ì— ì˜®ê²¨ ë‹´ê¸°
 			sorted[i] = a[i];
 		}
 		
