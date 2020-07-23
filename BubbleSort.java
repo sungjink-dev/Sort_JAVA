@@ -18,7 +18,7 @@ public class BubbleSort {
 				for (int j = 0; j < num.length - 1; j++) {	//이 for문은 하나씩 제자리를 찾은
 					                                        //마지막 요소 값을 하나씩 빼고 순환되도록 함.
 					if (num[j] > num[j + 1]) {	//j번 요소값이 j+1번 요소값 보다 클 경우,
-						temp = num[j];	//j번 요소를 temp로 빼내고
+						temp = num[j];		//j번 요소를 temp로 빼내고
 						num[j] = num[j + 1];	//j+1번의 작은 요소값을 j번에 넣는다.
 						num[j + 1] = temp;	//빼놓았던 원래 j번에 있던 큰 요소값은 temp에서 꺼내어 j+1에 넣는다.
 					}
