@@ -1,5 +1,3 @@
-package com.test;
-
 public class HeapSort {
 
 	private static int[] data;
@@ -8,19 +6,19 @@ public class HeapSort {
 	public static void main(String[] args) {
 		data = new int[number];
 		for (int i = 0; i < number; i++) { //
-			data[i] = (int) (Math.random() * 100);	//0~99±îÁö Áß 10°³ ¼ö ·£´ı ÃÊÀÌ½º
+			data[i] = (int) (Math.random() * 100);	//0~99ê¹Œì§€ ì¤‘ 10ê°œ ìˆ˜ ëœë¤ ì´ˆì´ìŠ¤
 		}
 
-		System.out.print("Á¤·Ä Àü : "); 
+		System.out.print("ì •ë ¬ ì „ : "); 
 		for (int i = 0; i < number; i++) {
 			System.out.print(data[i] + " ");
 		}
 
 		heap(data, number);
 		
-		//Æ®¸®¸ğ¾çÀ¸·Î 1Â÷ ¹è¿­  ÈÄ °¡Àå Å« °ªÀÌ ¸Ç À§¿¡ ÀÖµµ·Ï Á¤·Ä µÇ¾îÁ³´Ù
-		//¾Æ·¡¿¡¼­ °¡Àå Å« °ªÀÌ °¡Àå Å« ¿ä¼Ò¹øÈ£·Î µé¾î°¡µµ·Ï ÇÏ´Â °ÍÀÌ´Ù.
-		//±×¸®°í Á¤·ÄµÈ °ªÀº »©°í ´Ù½Ã ÈüÁ¤·ÄÀ» µ¹¸°´Ù.
+		//íŠ¸ë¦¬ëª¨ì–‘ìœ¼ë¡œ 1ì°¨ ë°°ì—´  í›„ ê°€ì¥ í° ê°’ì´ ë§¨ ìœ„ì— ìˆë„ë¡ ì •ë ¬ ë˜ì–´ì¡Œë‹¤
+		//ì•„ë˜ì—ì„œ ê°€ì¥ í° ê°’ì´ ê°€ì¥ í° ìš”ì†Œë²ˆí˜¸ë¡œ ë“¤ì–´ê°€ë„ë¡ í•˜ëŠ” ê²ƒì´ë‹¤.
+		//ê·¸ë¦¬ê³  ì •ë ¬ëœ ê°’ì€ ë¹¼ê³  ë‹¤ì‹œ í™ì •ë ¬ì„ ëŒë¦°ë‹¤.
 		for (int i = number - 1; i > 0; i--) {	//
 			int temp = data[0];
 			data[0] = data[i];
@@ -29,7 +27,7 @@ public class HeapSort {
 			heap(data, i);
 		}
 
-		System.out.print("\nÁ¤·Ä ÈÄ : ");
+		System.out.print("\nì •ë ¬ í›„ : ");
 		for (int i = 0; i < number; i++) {
 			System.out.print(data[i] + " ");
 		}
@@ -39,15 +37,15 @@ public class HeapSort {
  *    a
  *  b   c
  * d e f g
- * Æ®¸® ¸ğ¾çÀ¸·Î 1Â÷ Á¤·Ä
+ * íŠ¸ë¦¬ ëª¨ì–‘ìœ¼ë¡œ 1ì°¨ ì •ë ¬
  */
 	public static void heap(int[] data, int number) {
 		for (int i = 1; i < number; i++) {
-			int child = i;	//Å« ¿ä¼Ò¹øÈ£
+			int child = i;	//í° ìš”ì†Œë²ˆí˜¸
 			while (child > 0) {
-				int parent = (child - 1) / 2;	//ÀÛÀº ¿ä¼Ò¹øÈ£
-				if (data[child] > data[parent]) {	//ÀÛÀº ¿ä¼Ò¹øÈ£ °ªÀÌ Å¬ ¶§,
-					int temp = data[parent];	//ÀÚ¸® º¯°æ
+				int parent = (child - 1) / 2;	//ì‘ì€ ìš”ì†Œë²ˆí˜¸
+				if (data[child] > data[parent]) {	//ì‘ì€ ìš”ì†Œë²ˆí˜¸ ê°’ì´ í´ ë•Œ,
+					int temp = data[parent];	//ìë¦¬ ë³€ê²½
 					data[parent] = data[child];
 					data[child] = temp;
 				}
