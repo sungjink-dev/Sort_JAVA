@@ -8,11 +8,11 @@ public class SleepSort {
 		for (final int num : nums) {	//각 숫자마다 쓰레드 생성될 수 있도록 함
 			new Thread(new Runnable() {	//쓰레드 사용
 
-				public void run() {	//???
+				public void run() {
 					doneSignal.countDown();	//실행 완료된 쓰레드 카운팅 - 카운팅 완료되면 정수값 내려줘야하는데 Latch없어도 되는 걸까..?
 					try {
 						doneSignal.await();	//메인 잠시 대기
-						Thread.sleep(num * 1000);	//????
+						Thread.sleep(num * 1000);	//값 크기만큼 대기
 						System.out.println(num);
 					} catch (InterruptedException e) {	//쓰레드 진행 중단될 경우
 						e.printStackTrace();	//지난 처리 과정 출력
@@ -30,7 +30,6 @@ public class SleepSort {
 }
 
 /* 간단하게 알아본 내용!
- * 
  * 
  * Thread 
  * 
